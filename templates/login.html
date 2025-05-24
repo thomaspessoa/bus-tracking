@@ -1,0 +1,25 @@
+{% extends 'layout.html' %}
+
+{% block title %}Login - Rastreador de Ônibus Pro{% endblock %} {# Traduzido #}
+
+{% block content %}
+<div class="login-container">
+    <h2>Login</h2>
+    
+    {# Mensagens flash são tratadas no layout.html agora #}
+    
+    <form method="POST" action="{{ url_for('login') }}">
+        <div>
+            <label for="username">Usuário:</label> {# Traduzido #}
+            <input type="text" id="username" name="username" required>
+        </div>
+        <div>
+            <label for="password">Senha:</label> {# Traduzido #}
+            <input type="password" id="password" name="password" required>
+        </div>
+        <div>
+            <button type="submit">Entrar</button> {# Traduzido #}
+        </div>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,21 @@
+{% extends 'layout.html' %}
+
+{% block title %}Painel - Rastreador de Ônibus Pro{% endblock %} {# Traduzido #}
+
+{% block content %}
+    <h2>Painel de Controle</h2> {# Traduzido #}
+    <p>Olá, {{ current_user.username }}!</p>
+    <p>Sua função é: <strong>{{ current_user.role }}</strong>.</p>
+    
+    <p>Bem-vindo(a) à aplicação Rastreador de Ônibus Pro. Você está logado(a).</p> {# Traduzido #}
+
+    {% if current_user.role == 'admin' %}
+        <p><a href="{{ url_for('admin_dashboard') }}" class="button-link">Ir para o Painel do Administrador</a></p> {# Traduzido #}
+    {% elif current_user.role == 'driver' %}
+        <p><a href="{{ url_for('driver_dashboard') }}" class="button-link">Ir para o Painel do Motorista</a></p> {# Traduzido #}
+    {% endif %}
+
+    <div class="logout-link-container">
+        <a href="{{ url_for('logout') }}" class="button-link">Sair</a> {# Traduzido #}
+    </div>
+{% endblock %}

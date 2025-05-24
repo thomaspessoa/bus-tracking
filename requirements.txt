@@ -1,0 +1,7 @@
+Flask>=3.0.0
+Flask-SQLAlchemy>=3.1.0
+Flask-Login>=0.6.0
+# Werkzeug, SQLAlchemy, Jinja2, itsdangerous, click, blinker, greenlet are dependencies of the above
+# and will be installed automatically.
+# Pin specific versions if known compatibility issues arise or for stricter reproducibility.
+# For this project, allowing a range is acceptable.

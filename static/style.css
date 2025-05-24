@@ -1,0 +1,305 @@
+/* Estilos Gerais */
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    background-color: #FFFFE0; /* Amarelo Claro */
+    color: #333333; /* Cinza Escuro para texto */
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.container {
+    width: 80%;
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #FAFAD2; /* Amarelo Palha Claro / Quase Branco */
+    box-shadow: 0 0 15px rgba(0,0,0,0.1);
+    border-radius: 8px;
+    flex-grow: 1;
+}
+
+header {
+    background-color: #F08080; /* Coral Claro */
+    color: white;
+    padding: 1rem 0;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 2rem;
+    color: white; /* Garante que o texto do cabeçalho seja branco sobre fundo vermelho */
+}
+
+footer {
+    text-align: center;
+    padding: 15px;
+    background-color: #D2691E; /* Chocolate - vermelho/marrom terroso mais escuro */
+    color: white;
+    margin-top: auto;
+}
+
+h1, h2, h3 {
+    color: #C04040; /* Coral/Vermelho mais escuro para títulos */
+}
+
+a {
+    color: #F08080; /* Coral Claro */
+    text-decoration: none;
+}
+
+a:hover {
+    color: #CD5C5C; /* Vermelho Indiano para hover */
+    text-decoration: underline;
+}
+
+/* Formulários */
+form {
+    margin-top: 20px;
+}
+
+form div {
+    margin-bottom: 15px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #555; /* Um pouco mais claro que o texto principal para rótulos */
+}
+
+input[type="text"],
+input[type="password"],
+input[type="email"],
+textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #D3D3D3; /* Borda Cinza Claro */
+    border-radius: 4px;
+    box-sizing: border-box;
+    background-color: #FFFFF0; /* Marfim - amarelo muito claro para campos de entrada */
+    color: #333333;
+    transition: border-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+input[type="text"]:focus,
+input[type="password"]:focus,
+input[type="email"]:focus,
+textarea:focus {
+    border-color: #F08080; /* Borda de foco Coral Claro */
+    box-shadow: 0 0 5px rgba(240, 128, 128, 0.5); /* Sombra Coral Claro */
+    outline: none;
+}
+
+textarea {
+    min-height: 80px;
+    resize: vertical;
+}
+
+/* Botões */
+button, .button-link {
+    display: inline-block;
+    background-color: #F08080; /* Coral Claro */
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    font-size: 1rem;
+    transition: background-color 0.2s ease-in-out, transform 0.1s ease;
+}
+
+button:hover, .button-link:hover {
+    background-color: #CD5C5C; /* Vermelho Indiano para hover */
+    transform: translateY(-1px);
+}
+
+button:active, .button-link:active {
+    transform: translateY(0);
+}
+
+/* Mensagens Flash */
+.flashes {
+    list-style: none;
+    padding: 0;
+    margin-bottom: 20px;
+}
+
+.flash {
+    padding: 15px;
+    margin-bottom: 15px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    font-weight: bold;
+}
+
+.flash.success { /* Amarelo-esverdeado para sucesso, mantendo um toque de verde */
+    color: #285028; 
+    background-color: #E6FFB3; /* Amarelo-esverdeado claro */
+    border-color: #B3CC80; 
+}
+
+.flash.danger { /* Vermelho mais intenso para perigo */
+    color: #721c24; /* Texto vermelho escuro */
+    background-color: #F8D7DA; /* Fundo rosa/vermelho claro */
+    border-color: #F5C6CB; /* Borda rosa/vermelho um pouco mais escura */
+}
+
+.flash.warning { /* Amarelo-laranja para aviso */
+    color: #856404; /* Texto amarelo/marrom escuro */
+    background-color: #FFF3CD; /* Amarelo de aviso padrão */
+    border-color: #FFEEBA; 
+}
+
+.flash.info { /* Um vermelho/rosa claro para informação, para combinar com o tema */
+    color: #A52A2A; /* Texto marrom-avermelhado */
+    background-color: #FFDAB9; /* PeachPuff - um rosa-alaranjado claro */
+    border-color: #FFC085;
+}
+
+/* Tabelas */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    box-shadow: 0 2px 3px rgba(0,0,0,0.1);
+}
+
+th, td {
+    border: 1px solid #D3D3D3; /* Borda Cinza Claro */
+    padding: 12px;
+    text-align: left;
+}
+
+th {
+    background-color: #F08080; /* Coral Claro para cabeçalhos de tabela */
+    color: white;
+    font-weight: bold;
+}
+
+tbody tr:nth-child(odd) {
+    background-color: #FFFFF0; /* Marfim para linhas ímpares */
+}
+
+tbody tr:hover {
+    background-color: #FFFEE0; /* Amarelo mais claro para hover */
+}
+
+/* Elementos Específicos da Página */
+.login-container {
+    width: 100%;
+    max-width: 400px;
+    margin: 50px auto;
+    padding: 30px;
+    background-color: #FAFAD2; /* Amarelo Palha Claro (mesmo que .container) */
+    box-shadow: 0 0 20px rgba(0,0,0,0.1);
+    border-radius: 8px;
+}
+
+.login-container h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #C04040; /* Coral/Vermelho mais escuro */
+}
+
+.trip-info, .new-trip-form {
+    margin-top: 20px;
+    padding: 20px;
+    border: 1px solid #D3D3D3; /* Borda Cinza Claro */
+    border-radius: 5px;
+    background-color: #FFFFF0; /* Marfim - amarelo levemente esbranquiçado */
+}
+
+#location-status {
+    margin-top: 10px;
+    padding: 10px;
+    background-color: #FFFEE0; /* Amarelo mais claro para caixa de status */
+    border: 1px dashed #F08080; /* Borda tracejada coral */
+    color: #555;
+    border-radius: 4px;
+    font-style: italic;
+}
+
+#map {
+    height: 500px; /* Altura padrão */
+    margin-top: 20px;
+    border: 1px solid #D3D3D3; /* Borda Cinza Claro */
+    border-radius: 5px;
+}
+
+.logout-link-container {
+    margin-top: 20px;
+    text-align: right;
+}
+
+/* Botão de logout mantém seu vermelho distinto do tema original, pois é um padrão UX comum */
+/* Se precisar ser vermelho claro, mude #dc3545 para #F08080 e #c82333 para #CD5C5C */
+.logout-link-container .button-link {
+    background-color: #E67E7E; /* Um vermelho um pouco menos intenso que #F08080 puro para variação */
+}
+.logout-link-container .button-link:hover {
+    background-color: #D16868; 
+}
+
+/* Styling for delete button in tables */
+.btn-excluir {
+    background-color: #dc3545; /* Standard Bootstrap danger red, good for delete */
+    color: white;
+    padding: 5px 10px; /* Smaller padding for table buttons */
+    font-size: 0.85rem;
+    border-radius: 3px;
+}
+
+.btn-excluir:hover {
+    background-color: #c82333; /* Darker danger red */
+    transform: translateY(-1px); /* Keep existing hover effect */
+}
+
+
+/* Ajustes Responsivos */
+/* Styling for bus emoji icon on map */
+.bus-emoji-icon {
+    font-size: 20px; /* Ajuste o tamanho do emoji */
+    text-align: center;
+    line-height: 24px; /* Alinhar verticalmente com iconSize, se iconSize for [24, 24] */
+    background: transparent !important; /* Remover fundo padrão se houver */
+    border: none !important; /* Remover borda padrão se houver */
+    /* box-shadow: none !important; /* Remover sombra se houver */
+}
+
+@media (max-width: 768px) {
+    .container {
+        width: 95%;
+        padding: 15px;
+    }
+
+    header h1 {
+        font-size: 1.5rem;
+    }
+
+    input[type="text"],
+    input[type="password"],
+    input[type="email"],
+    textarea,
+    button {
+        font-size: 0.95rem;
+    }
+
+    table {
+        font-size: 0.9rem;
+    }
+    th, td {
+        padding: 8px;
+    }
+    #map {
+        height: 300px; /* Mapa menor em dispositivos móveis */
+    }
+}

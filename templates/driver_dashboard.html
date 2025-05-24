@@ -1,0 +1,130 @@
+{% extends 'layout.html' %}
+
+{% block title %}Painel do Motorista - Rastreador de Ônibus Pro{% endblock %}
+
+{% block content %}
+    <h2>Painel do Motorista</h2>
+    <p>Bem-vindo(a), {{ current_user.username }} (Motorista)!</p>
+    
+    {# Mensagens flash são tratadas no layout.html #}
+
+    <hr>
+
+    {% if active_trip and active_trip.status == 'active' %}
+        <div class="trip-info">
+            <h3>Viagem Ativa Atual</h3>
+            <p><strong>ID:</strong> {{ active_trip.id }}</p>
+            {# Se nome_motorista_viagem for exibido aqui, adicione-o. Por enquanto, schedule é o principal. #}
+            <p><strong>Detalhes:</strong> {{ active_trip.schedule }}</p> 
+            <p><strong>Nome para esta Viagem:</strong> {{ active_trip.nome_motorista_viagem }}</p>
+            <p><strong>Iniciada em:</strong> {{ active_trip.start_time.strftime('%Y-%m-%d %H:%M:%S') }} UTC</p>
+            <p><strong>Status:</strong> <span class="status-active">{{ active_trip.status }}</span></p>
+            <div id="location-status">Rastreando localização...</div>
+        </div>
+        
+        <hr style="margin-top: 30px; margin-bottom: 30px;">
+
+        <div class="end-trip-container" style="margin-top: 20px;">
+            <h3>Finalizar Viagem Atual</h3>
+            <form method="POST" action="{{ url_for('end_trip') }}">
+                <div>
+                    <label for="observacao">Observações (opcional):</label><br>
+                    <textarea id="observacao" name="observacao" rows="3" style="width: 100%;"></textarea>
+                </div>
+                <div style="margin-top: 10px;">
+                    <button type="submit">Finalizar Viagem</button>
+                </div>
+            </form>
+        </div>
+    {% else %}
+        <div class="new-trip-form">
+            <h3>Iniciar Nova Viagem</h3>
+            <form method="POST" action="{{ url_for('start_trip') }}">
+                <div>
+                    <label for="nome_motorista_viagem">Seu Nome (para esta viagem):</label>
+                    <input type="text" id="nome_motorista_viagem" name="nome_motorista_viagem" required size="50">
+                </div>
+                <div>
+                    <label for="destino">Destino:</label>
+                    <input type="text" id="destino" name="destino" required size="50">
+                </div>
+                <div>
+                    <label for="horario_viagem">Horário da Viagem:</label>
+                    <input type="text" id="horario_viagem" name="horario_viagem" required size="50" placeholder="Ex: 14:30, Imediato, etc.">
+                </div>
+                <div>
+                    <label for="numero_onibus">Número do Ônibus:</label>
+                    <input type="text" id="numero_onibus" name="numero_onibus" required size="20">
+                </div>
+                <div>
+                    <button type="submit">Iniciar Viagem</button>
+                </div>
+            </form>
+        </div>
+    {% endif %}
+
+    <div class="logout-link-container" style="margin-top: 30px;">
+        <a href="{{ url_for('logout') }}" class="button-link">Sair</a>
+    </div>
+{% endblock %}
+
+{% block scripts_extra %}
+    {% if active_trip and active_trip.status == 'active' %}
+    <script>
+        // Geolocation script remains the same
+        let watchId = null;
+        const locationStatusEl = document.getElementById('location-status');
+
+        function sendLocation(latitude, longitude) {
+            fetch("{{ url_for('update_location') }}", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ latitude: latitude, longitude: longitude })
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Atualização de localização:', data);
+                if (data.status === 'success') {
+                    if (locationStatusEl) locationStatusEl.textContent = `Localização atualizada: ${latitude.toFixed(5)}, ${longitude.toFixed(5)} às ${new Date().toLocaleTimeString()}`;
+                } else {
+                    if (locationStatusEl) locationStatusEl.textContent = `Erro ao atualizar localização: ${data.message}`;
+                    console.error('Erro do servidor:', data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Erro de fetch ao atualizar localização:', error);
+                if (locationStatusEl) locationStatusEl.textContent = 'Erro ao enviar dados de localização.';
+            });
+        }
+
+        if (navigator.geolocation) {
+            watchId = navigator.geolocation.watchPosition(
+                (position) => {
+                    const lat = position.coords.latitude;
+                    const lon = position.coords.longitude;
+                    console.log(`Observando localização: Lat: ${lat}, Lon: ${lon}`);
+                    sendLocation(lat, lon);
+                },
+                (error) => {
+                    console.error("Erro ao obter localização:", error);
+                    if (locationStatusEl) {
+                        locationStatusEl.textContent = `Erro ao obter localização: ${error.message}`;
+                    }
+                },
+                {
+                    enableHighAccuracy: true,
+                    timeout: 10000,
+                    maximumAge: 0
+                }
+            );
+            console.log("Monitoramento de geolocalização iniciado com ID:", watchId);
+            if (locationStatusEl) locationStatusEl.textContent = "Rastreamento de geolocalização iniciado. Aguardando primeira atualização...";
+        } else {
+            console.error("Geolocalização não é suportada por este navegador.");
+            if (locationStatusEl) locationStatusEl.textContent = "Geolocalização não é suportada por este navegador.";
+        }
+    </script>
+    {% endif %}
+{% endblock %}

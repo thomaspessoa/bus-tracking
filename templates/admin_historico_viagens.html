@@ -1,0 +1,76 @@
+{% extends 'layout.html' %}
+
+{% block title %}Histórico de Viagens - Rastreador de Ônibus Pro{% endblock %}
+
+{% block content %}
+    <h2>Histórico de Viagens</h2>
+
+    <div class="navigation-links" style="margin-bottom: 20px;">
+        <a href="{{ url_for('admin_dashboard') }}" class="button-link">&laquo; Voltar ao Painel do Administrador</a>
+    </div>
+
+    <form method="GET" action="{{ url_for('admin_historico_viagens') }}" class="filter-form">
+        <h3>Filtrar por Data da Viagem</h3>
+        <div style="display: flex; gap: 15px; align-items: flex-end;">
+            <div>
+                <label for="data_inicio">Data de Início:</label>
+                <input type="date" id="data_inicio" name="data_inicio" value="{{ data_inicio_str if data_inicio_str else '' }}">
+            </div>
+            <div>
+                <label for="data_fim">Data de Fim:</label>
+                <input type="date" id="data_fim" name="data_fim" value="{{ data_fim_str if data_fim_str else '' }}">
+            </div>
+            <div>
+                <button type="submit">Filtrar</button>
+            </div>
+             <div>
+                <a href="{{ url_for('admin_historico_viagens') }}" class="button-link" style="background-color: #6c757d;">Limpar Filtro</a>
+            </div>
+        </div>
+    </form>
+
+    <hr style="margin-top: 30px; margin-bottom: 30px;">
+
+    <h3>Viagens Completas</h3>
+    {% if viagens_completas %}
+        <table>
+            <thead>
+                <tr>
+                    <th>ID da Viagem</th>
+                    <th>Motorista (Login)</th>
+                    <th>Nome na Viagem</th> {# Nova coluna #}
+                    <th>Número do Ônibus</th>
+                    <th>Detalhes da Viagem (Destino/Horário)</th>
+                    <th>Data da Viagem</th>
+                    <th>Início da Viagem (UTC)</th>
+                    <th>Fim da Viagem (UTC)</th>
+                    <th>Observações</th>
+                    <th>Ações</th> {# Nova coluna para Ações #}
+                </tr>
+            </thead>
+            <tbody>
+                {% for viagem in viagens_completas %}
+                <tr>
+                    <td>{{ viagem.id }}</td>
+                    <td>{{ viagem.driver.username if viagem.driver else 'N/D' }}</td>
+                    <td>{{ viagem.nome_motorista_viagem }}</td> {# Exibir novo campo #}
+                    <td>{{ viagem.numero_onibus if viagem.numero_onibus else 'N/D' }}</td>
+                    <td>{{ viagem.schedule }}</td>
+                    <td>{{ viagem.data_viagem.strftime('%d/%m/%Y') if viagem.data_viagem else 'N/D' }}</td>
+                    <td>{{ viagem.start_time.strftime('%d/%m/%Y %H:%M:%S') if viagem.start_time else 'N/D' }}</td>
+                    <td>{{ viagem.end_time.strftime('%d/%m/%Y %H:%M:%S') if viagem.end_time else 'N/D' }}</td>
+                    <td>{{ viagem.observacao if viagem.observacao else '' }}</td>
+                    <td>
+                        <form action="{{ url_for('excluir_viagem', trip_id=viagem.id) }}" method="POST" style="display:inline;">
+                            <button type="submit" class="button-link btn-excluir" onclick="return confirm('Tem certeza que deseja excluir esta viagem? Esta ação não pode ser desfeita.');">Excluir</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p class="no-trips">Nenhuma viagem completa encontrada para o período selecionado ou no total.</p>
+    {% endif %}
+
+{% endblock %}
