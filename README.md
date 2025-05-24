@@ -79,17 +79,5 @@ Isso descobrirá e executará todos os testes localizados no diretório `tests`.
 
 ## Credenciais Padrão
 
-A aplicação vem com dois usuários pré-criados:
-
-*   **Administrador:**
-    *   Usuário: `rizzatti_adm`
-    *   Senha: `rizzatti_adm`
-*   **Motorista:**
-    *   Usuário: `motorista`
-    *   Senha: `rizzatti.motorista`
-
-Você pode fazer login com essas credenciais para explorar os respectivos painéis e funcionalidades.
-
----
 
 Este projeto foi desenvolvido como parte de um exercício guiado.
